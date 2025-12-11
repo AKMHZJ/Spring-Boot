@@ -27,7 +27,6 @@ While most of the inheritance is fine, it also inherits unwanted elements like `
 To prevent this, the project POM contains empty overrides for these elements.
 If you manually switch to a different parent and actually want the inheritance, you need to remove those overrides.
 
-
+```bash
 ### TO RUN
-
  mvn spring-boot:run 
