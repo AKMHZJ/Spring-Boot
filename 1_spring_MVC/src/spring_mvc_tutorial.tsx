@@ -229,9 +229,13 @@ public class ProductController {
     }
   };
 
+  const allCompleted = completedSections.size === sections.length;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-6">
       <div className="max-w-6xl mx-auto">
+        {!allCompleted ? (
+          <>
         <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
           <div className="flex items-center gap-3 mb-4">
             <Book className="w-8 h-8 text-green-600" />
@@ -341,6 +345,59 @@ public class ProductController {
             </div>
           </div>
         </div>
+        </>
+        ) : (
+          /* Completion Page */
+          <div className="flex items-center justify-center min-h-[80vh]">
+            <div className="bg-white rounded-2xl shadow-2xl p-12 max-w-2xl text-center">
+              <div className="mb-6">
+                <CheckCircle className="w-24 h-24 text-green-500 mx-auto mb-4" />
+                <h1 className="text-4xl font-bold text-gray-800 mb-4">
+                  🎉 Congratulations!
+                </h1>
+                <p className="text-xl text-gray-600 mb-2">
+                  You've completed Spring MVC!
+                </p>
+                <p className="text-gray-500">
+                  You now know how to build REST APIs with Spring Boot
+                </p>
+              </div>
+
+              <div className="bg-green-50 border-l-4 border-green-500 p-6 mb-8 text-left">
+                <h3 className="font-bold text-green-800 mb-2">✅ What You Learned:</h3>
+                <ul className="text-green-700 space-y-1 text-sm">
+                  <li>• Creating REST Controllers</li>
+                  <li>• HTTP Methods (GET, POST, PUT, DELETE)</li>
+                  <li>• Request Parameters and Path Variables</li>
+                  <li>• Building complete CRUD APIs</li>
+                </ul>
+              </div>
+
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8 text-left">
+                <h3 className="font-bold text-blue-800 mb-2">⏭️ Next Step: Spring Data JPA</h3>
+                <p className="text-blue-700 text-sm mb-2">
+                  Learn how to save your data to a real database instead of using ArrayLists!
+                </p>
+                <p className="text-blue-600 text-sm">
+                  You'll learn JPA, Hibernate, and database persistence.
+                </p>
+              </div>
+
+              <a
+                href="https://2-spring-jpa.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg px-8 py-4 rounded-lg transition-all transform hover:scale-105 shadow-lg"
+              >
+                Continue to Spring Data JPA →
+              </a>
+
+              <p className="text-gray-500 text-sm mt-6">
+                Keep up the great work! 🚀
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
