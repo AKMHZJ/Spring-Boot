@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Database, Code, CheckCircle } from 'lucide-react';
+import { Database, Code, CheckCircle, ArrowLeft, Shield } from 'lucide-react';
 
 export default function SpringJPATutorial() {
   const [activeSection, setActiveSection] = useState(0);
-  // const [completedSections, setCompletedSections] = useState(new Set());
   const [completedSections, setCompletedSections] = useState<Set<number>>(new Set());
 
   const sections = [
@@ -34,8 +33,7 @@ repository.save(student); // Saved to database!`
       content: `Add these two dependencies to enable database support:
 • spring-boot-starter-data-jpa (JPA support)
 • h2 (in-memory database for learning)`,
-      code: `<!-- Add to pom.xml inside <dependencies> -->
-<dependency>
+      code: `<dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-data-jpa</artifactId>
 </dependency>
@@ -45,7 +43,7 @@ repository.save(student); // Saved to database!`
     <scope>runtime</scope>
 </dependency>
 
-<!-- After adding, right-click project → Maven → Reload Project -->`
+`
     },
     {
       title: "3. Configure Database",
@@ -377,122 +375,193 @@ public class ProductController {
     }
   };
 
+  const allCompleted = completedSections.size === sections.length;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
       <div className="max-w-6xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
-          <div className="flex items-center gap-3 mb-4">
-            <Database className="w-8 h-8 text-blue-600" />
-            <h1 className="text-3xl font-bold text-gray-800">Spring Data JPA + Hibernate Tutorial</h1>
-          </div>
-          <p className="text-gray-600 mb-2">Save data to a real database - no SQL required!</p>
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
-            <p className="text-sm text-blue-800">
-              <strong>You completed:</strong> ✅ Spring MVC<br/>
-              <strong>Now learning:</strong> 🔵 Spring Data JPA + Hibernate<br/>
-              <strong>Next up:</strong> Spring Security
-            </p>
-          </div>
-          <div className="mt-4 flex gap-2">
-            {sections.map((_, idx) => (
-              <div
-                key={idx}
-                className={`h-2 flex-1 rounded ${
-                  completedSections.has(idx)
-                    ? 'bg-green-500'
-                    : idx === activeSection
-                    ? 'bg-blue-500'
-                    : 'bg-gray-200'
-                }`}
-              />
-            ))}
-          </div>
-        </div>
+        {!allCompleted ? (
+          <>
+            {/* Back to MVC Button */}
+            <a 
+              href="https://1-spring-mvc.netlify.app/"
+              className="inline-flex items-center text-blue-700 font-medium mb-4 hover:underline transition-all"
+            >
+              <ArrowLeft className="w-4 h-4 mr-1" /> Back to Spring MVC
+            </a>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow p-4 sticky top-6">
-              <h2 className="font-semibold text-gray-700 mb-3">Sections</h2>
-              <div className="space-y-2">
-                {sections.map((section, idx) => (
-                  <button
+            <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
+              <div className="flex items-center gap-3 mb-4">
+                <Database className="w-8 h-8 text-blue-600" />
+                <h1 className="text-3xl font-bold text-gray-800">Spring Data JPA + Hibernate Tutorial</h1>
+              </div>
+              <p className="text-gray-600 mb-2">Save data to a real database - no SQL required!</p>
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                <p className="text-sm text-blue-800">
+                  <strong>You completed:</strong> ✅ Spring MVC<br/>
+                  <strong>Now learning:</strong> 🔵 Spring Data JPA + Hibernate<br/>
+                  <strong>Next up:</strong> Spring Security
+                </p>
+              </div>
+              <div className="mt-4 flex gap-2">
+                {sections.map((_, idx) => (
+                  <div
                     key={idx}
-                    onClick={() => setActiveSection(idx)}
-                    className={`w-full text-left p-3 rounded transition ${
-                      activeSection === idx
-                        ? 'bg-blue-100 text-blue-700'
-                        : 'hover:bg-gray-100 text-gray-600'
+                    className={`h-2 flex-1 rounded ${
+                      completedSections.has(idx)
+                        ? 'bg-green-500'
+                        : idx === activeSection
+                        ? 'bg-blue-500'
+                        : 'bg-gray-200'
                     }`}
-                  >
-                    <div className="flex items-center gap-2">
-                      {completedSections.has(idx) && (
-                        <CheckCircle className="w-4 h-4 text-green-500" />
-                      )}
-                      <span className="text-sm font-medium">{section.title}</span>
-                    </div>
-                  </button>
+                  />
                 ))}
               </div>
             </div>
-          </div>
 
-          <div className="lg:col-span-3">
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                  {sections[activeSection].title}
-                </h2>
-                <p className="text-gray-600">{sections[activeSection].description}</p>
-              </div>
-
-              <div className="mb-6">
-                <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
-                  <p className="text-gray-700 whitespace-pre-line">
-                    {sections[activeSection].content}
-                  </p>
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+              <div className="lg:col-span-1">
+                <div className="bg-white rounded-lg shadow p-4 sticky top-6">
+                  <h2 className="font-semibold text-gray-700 mb-3">Sections</h2>
+                  <div className="space-y-2">
+                    {sections.map((section, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActiveSection(idx)}
+                        className={`w-full text-left p-3 rounded transition ${
+                          activeSection === idx
+                            ? 'bg-blue-100 text-blue-700'
+                            : 'hover:bg-gray-100 text-gray-600'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          {completedSections.has(idx) && (
+                            <CheckCircle className="w-4 h-4 text-green-500" />
+                          )}
+                          <span className="text-sm font-medium">{section.title}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <Code className="w-5 h-5 text-gray-600" />
-                  <h3 className="font-semibold text-gray-700">Code Example</h3>
+              <div className="lg:col-span-3">
+                <div className="bg-white rounded-lg shadow-lg p-8">
+                  <div className="mb-6">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                      {sections[activeSection].title}
+                    </h2>
+                    <p className="text-gray-600">{sections[activeSection].description}</p>
+                  </div>
+
+                  <div className="mb-6">
+                    <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                      <p className="text-gray-700 whitespace-pre-line">
+                        {sections[activeSection].content}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Code className="w-5 h-5 text-gray-600" />
+                      <h3 className="font-semibold text-gray-700">Code Example</h3>
+                    </div>
+                    <pre className="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm">
+                      <code>{sections[activeSection].code}</code>
+                    </pre>
+                  </div>
+
+                  <div className="flex justify-between items-center pt-4 border-t">
+                    <button
+                      onClick={() => setActiveSection(Math.max(0, activeSection - 1))}
+                      disabled={activeSection === 0}
+                      className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Previous
+                    </button>
+
+                    <button
+                      onClick={() => handleComplete(activeSection)}
+                      className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2"
+                    >
+                      <CheckCircle className="w-4 h-4" />
+                      {activeSection === sections.length - 1 ? 'Complete!' : 'Mark Complete & Next'}
+                    </button>
+                  </div>
                 </div>
-                <pre className="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm">
-                  <code>{sections[activeSection].code}</code>
-                </pre>
-              </div>
 
-              <div className="flex justify-between items-center pt-4 border-t">
-                <button
-                  onClick={() => setActiveSection(Math.max(0, activeSection - 1))}
-                  disabled={activeSection === 0}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Previous
-                </button>
-
-                <button
-                  onClick={() => handleComplete(activeSection)}
-                  className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2"
-                >
-                  <CheckCircle className="w-4 h-4" />
-                  {activeSection === sections.length - 1 ? 'Complete!' : 'Mark Complete & Next'}
-                </button>
+                <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                  <h3 className="font-semibold text-yellow-800 mb-2">💡 Key Differences from Spring MVC</h3>
+                  <ul className="text-yellow-700 space-y-1 text-sm">
+                    <li>• <strong>Before:</strong> List&lt;Student&gt; list = new ArrayList&lt;&gt;() - data lost on restart</li>
+                    <li>• <strong>Now:</strong> StudentRepository repository - data saved to database</li>
+                    <li>• <strong>@Entity</strong> marks a class as a database table</li>
+                    <li>• <strong>JpaRepository</strong> gives you save(), findAll(), etc. for free!</li>
+                  </ul>
+                </div>
               </div>
             </div>
+          </>
+        ) : (
+          /* Completion Page */
+          <div className="flex items-center justify-center min-h-[80vh]">
+            <div className="bg-white rounded-2xl shadow-2xl p-12 max-w-2xl text-center">
+              <div className="mb-6">
+                <CheckCircle className="w-24 h-24 text-green-500 mx-auto mb-4" />
+                <h1 className="text-4xl font-bold text-gray-800 mb-4">
+                  🎉 Congratulations!
+                </h1>
+                <p className="text-xl text-gray-600 mb-2">
+                  You've completed Spring Data JPA!
+                </p>
+                <p className="text-gray-500">
+                  You can now build APIs that save data to a real database.
+                </p>
+              </div>
 
-            <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-              <h3 className="font-semibold text-yellow-800 mb-2">💡 Key Differences from Spring MVC</h3>
-              <ul className="text-yellow-700 space-y-1 text-sm">
-                <li>• <strong>Before:</strong> List&lt;Student&gt; list = new ArrayList&lt;&gt;() - data lost on restart</li>
-                <li>• <strong>Now:</strong> StudentRepository repository - data saved to database</li>
-                <li>• <strong>@Entity</strong> marks a class as a database table</li>
-                <li>• <strong>JpaRepository</strong> gives you save(), findAll(), etc. for free!</li>
-              </ul>
+              <div className="bg-green-50 border-l-4 border-green-500 p-6 mb-8 text-left">
+                <h3 className="font-bold text-green-800 mb-2">✅ What You Learned:</h3>
+                <ul className="text-green-700 space-y-1 text-sm">
+                  <li>• Creating Entities (@Entity)</li>
+                  <li>• Using JpaRepository for CRUD</li>
+                  <li>• Custom Query Methods</li>
+                  <li>• H2 Database Configuration</li>
+                </ul>
+              </div>
+
+              <div className="bg-purple-50 border-l-4 border-purple-500 p-6 mb-8 text-left">
+                <h3 className="font-bold text-purple-800 mb-2">⏭️ Next Step: Spring Security</h3>
+                <p className="text-purple-700 text-sm mb-2">
+                  Now that you have data, you need to protect it!
+                </p>
+                <p className="text-purple-600 text-sm">
+                  Learn authentication, JWTs, and how to secure your endpoints.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <a
+                  href="https://3-spring-security.netlify.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center bg-purple-600 hover:bg-purple-700 text-white font-bold text-lg px-8 py-4 rounded-lg transition-all transform hover:scale-105 shadow-lg"
+                >
+                  <Shield className="w-5 h-5 mr-2" />
+                  Continue to Spring Security →
+                </a>
+
+                <a 
+                  href="https://1-spring-mvc.netlify.app/"
+                  className="text-gray-500 hover:text-blue-600 hover:underline text-sm mt-2"
+                >
+                  ← Review Spring MVC
+                </a>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

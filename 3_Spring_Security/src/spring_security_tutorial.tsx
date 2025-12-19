@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Shield, Code, CheckCircle, Lock } from 'lucide-react';
+import { Shield, Code, CheckCircle, Lock, ArrowLeft, Server } from 'lucide-react';
 
 export default function SpringSecurityTutorial() {
   const [activeSection, setActiveSection] = useState(0);
-  // const [completedSections, setCompletedSections] = useState(new Set());
   const [completedSections, setCompletedSections] = useState<Set<number>>(new Set());
 
   const sections = [
@@ -50,13 +49,10 @@ public List<User> getUsers() {
       description: "Update pom.xml",
       content: `Add Spring Security to your existing project.
 This single dependency gives you authentication, encryption, and more!`,
-      code: `<!-- Add to pom.xml -->
-<dependency>
+      code: `<dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-security</artifactId>
 </dependency>
-
-<!-- After adding, reload Maven -->
 
 ⚠️ IMPORTANT: As soon as you add this dependency and restart:
 - ALL your endpoints become protected!
@@ -455,126 +451,197 @@ SELECT * FROM USERS;
     }
   };
 
+  const allCompleted = completedSections.size === sections.length;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 p-6">
       <div className="max-w-6xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
-          <div className="flex items-center gap-3 mb-4">
-            <Shield className="w-8 h-8 text-red-600" />
-            <h1 className="text-3xl font-bold text-gray-800">Spring Security Tutorial</h1>
-          </div>
-          <p className="text-gray-600 mb-2">Secure your APIs with authentication and authorization</p>
-          <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded">
-            <p className="text-sm text-red-800">
-              <strong>You completed:</strong> ✅ Spring MVC, ✅ Spring Data JPA<br/>
-              <strong>Now learning:</strong> 🔴 Spring Security<br/>
-              <strong>Next up:</strong> Jakarta API (advanced concepts)
-            </p>
-          </div>
-          <div className="mt-4 flex gap-2">
-            {sections.map((_, idx) => (
-              <div
-                key={idx}
-                className={`h-2 flex-1 rounded ${
-                  completedSections.has(idx)
-                    ? 'bg-green-500'
-                    : idx === activeSection
-                    ? 'bg-red-500'
-                    : 'bg-gray-200'
-                }`}
-              />
-            ))}
-          </div>
-        </div>
+        {!allCompleted ? (
+          <>
+            {/* Back Button */}
+            <a 
+              href="https://2-spring-jpa.netlify.app/"
+              className="inline-flex items-center text-red-700 font-medium mb-4 hover:underline transition-all"
+            >
+              <ArrowLeft className="w-4 h-4 mr-1" /> Back to Spring Data JPA
+            </a>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow p-4 sticky top-6">
-              <h2 className="font-semibold text-gray-700 mb-3">Sections</h2>
-              <div className="space-y-2">
-                {sections.map((section, idx) => (
-                  <button
+            <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
+              <div className="flex items-center gap-3 mb-4">
+                <Shield className="w-8 h-8 text-red-600" />
+                <h1 className="text-3xl font-bold text-gray-800">Spring Security Tutorial</h1>
+              </div>
+              <p className="text-gray-600 mb-2">Secure your APIs with authentication and authorization</p>
+              <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                <p className="text-sm text-red-800">
+                  <strong>You completed:</strong> ✅ Spring MVC, ✅ Spring Data JPA<br/>
+                  <strong>Now learning:</strong> 🔴 Spring Security<br/>
+                  <strong>Next up:</strong> Jakarta API (advanced concepts)
+                </p>
+              </div>
+              <div className="mt-4 flex gap-2">
+                {sections.map((_, idx) => (
+                  <div
                     key={idx}
-                    onClick={() => setActiveSection(idx)}
-                    className={`w-full text-left p-3 rounded transition ${
-                      activeSection === idx
-                        ? 'bg-red-100 text-red-700'
-                        : 'hover:bg-gray-100 text-gray-600'
+                    className={`h-2 flex-1 rounded ${
+                      completedSections.has(idx)
+                        ? 'bg-green-500'
+                        : idx === activeSection
+                        ? 'bg-red-500'
+                        : 'bg-gray-200'
                     }`}
-                  >
-                    <div className="flex items-center gap-2">
-                      {completedSections.has(idx) && (
-                        <CheckCircle className="w-4 h-4 text-green-500" />
-                      )}
-                      <span className="text-sm font-medium">{section.title}</span>
-                    </div>
-                  </button>
+                  />
                 ))}
               </div>
             </div>
-          </div>
 
-          <div className="lg:col-span-3">
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                  {sections[activeSection].title}
-                </h2>
-                <p className="text-gray-600">{sections[activeSection].description}</p>
-              </div>
-
-              <div className="mb-6">
-                <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded">
-                  <p className="text-gray-700 whitespace-pre-line">
-                    {sections[activeSection].content}
-                  </p>
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+              <div className="lg:col-span-1">
+                <div className="bg-white rounded-lg shadow p-4 sticky top-6">
+                  <h2 className="font-semibold text-gray-700 mb-3">Sections</h2>
+                  <div className="space-y-2">
+                    {sections.map((section, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActiveSection(idx)}
+                        className={`w-full text-left p-3 rounded transition ${
+                          activeSection === idx
+                            ? 'bg-red-100 text-red-700'
+                            : 'hover:bg-gray-100 text-gray-600'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          {completedSections.has(idx) && (
+                            <CheckCircle className="w-4 h-4 text-green-500" />
+                          )}
+                          <span className="text-sm font-medium">{section.title}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <Code className="w-5 h-5 text-gray-600" />
-                  <h3 className="font-semibold text-gray-700">Code Example</h3>
+              <div className="lg:col-span-3">
+                <div className="bg-white rounded-lg shadow-lg p-8">
+                  <div className="mb-6">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                      {sections[activeSection].title}
+                    </h2>
+                    <p className="text-gray-600">{sections[activeSection].description}</p>
+                  </div>
+
+                  <div className="mb-6">
+                    <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                      <p className="text-gray-700 whitespace-pre-line">
+                        {sections[activeSection].content}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Code className="w-5 h-5 text-gray-600" />
+                      <h3 className="font-semibold text-gray-700">Code Example</h3>
+                    </div>
+                    <pre className="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm">
+                      <code>{sections[activeSection].code}</code>
+                    </pre>
+                  </div>
+
+                  <div className="flex justify-between items-center pt-4 border-t">
+                    <button
+                      onClick={() => setActiveSection(Math.max(0, activeSection - 1))}
+                      disabled={activeSection === 0}
+                      className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Previous
+                    </button>
+
+                    <button
+                      onClick={() => handleComplete(activeSection)}
+                      className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-2"
+                    >
+                      <CheckCircle className="w-4 h-4" />
+                      {activeSection === sections.length - 1 ? 'Complete!' : 'Mark Complete & Next'}
+                    </button>
+                  </div>
                 </div>
-                <pre className="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm">
-                  <code>{sections[activeSection].code}</code>
-                </pre>
-              </div>
 
-              <div className="flex justify-between items-center pt-4 border-t">
-                <button
-                  onClick={() => setActiveSection(Math.max(0, activeSection - 1))}
-                  disabled={activeSection === 0}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Previous
-                </button>
-
-                <button
-                  onClick={() => handleComplete(activeSection)}
-                  className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-2"
-                >
-                  <CheckCircle className="w-4 h-4" />
-                  {activeSection === sections.length - 1 ? 'Complete!' : 'Mark Complete & Next'}
-                </button>
+                <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                  <h3 className="font-semibold text-yellow-800 mb-2 flex items-center gap-2">
+                    <Lock className="w-5 h-5" />
+                    Security Key Points
+                  </h3>
+                  <ul className="text-yellow-700 space-y-1 text-sm">
+                    <li>• <strong>Passwords encrypted</strong> with BCrypt (one-way hash)</li>
+                    <li>• <strong>Authentication:</strong> WHO you are (username/password)</li>
+                    <li>• <strong>Authorization:</strong> WHAT you can do (USER vs ADMIN)</li>
+                    <li>• <strong>@PreAuthorize:</strong> Restrict endpoints by role</li>
+                    <li>• <strong>Never store plain text passwords!</strong></li>
+                  </ul>
+                </div>
               </div>
             </div>
+          </>
+        ) : (
+          /* Completion Page */
+          <div className="flex items-center justify-center min-h-[80vh]">
+            <div className="bg-white rounded-2xl shadow-2xl p-12 max-w-2xl text-center">
+              <div className="mb-6">
+                <CheckCircle className="w-24 h-24 text-green-500 mx-auto mb-4" />
+                <h1 className="text-4xl font-bold text-gray-800 mb-4">
+                  🎉 Congratulations!
+                </h1>
+                <p className="text-xl text-gray-600 mb-2">
+                  You've completed Spring Security!
+                </p>
+                <p className="text-gray-500">
+                  Your application is now safe and secure.
+                </p>
+              </div>
 
-            <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-              <h3 className="font-semibold text-yellow-800 mb-2 flex items-center gap-2">
-                <Lock className="w-5 h-5" />
-                Security Key Points
-              </h3>
-              <ul className="text-yellow-700 space-y-1 text-sm">
-                <li>• <strong>Passwords encrypted</strong> with BCrypt (one-way hash)</li>
-                <li>• <strong>Authentication:</strong> WHO you are (username/password)</li>
-                <li>• <strong>Authorization:</strong> WHAT you can do (USER vs ADMIN)</li>
-                <li>• <strong>@PreAuthorize:</strong> Restrict endpoints by role</li>
-                <li>• <strong>Never store plain text passwords!</strong></li>
-              </ul>
+              <div className="bg-green-50 border-l-4 border-green-500 p-6 mb-8 text-left">
+                <h3 className="font-bold text-green-800 mb-2">✅ What You Learned:</h3>
+                <ul className="text-green-700 space-y-1 text-sm">
+                  <li>• Authentication vs Authorization</li>
+                  <li>• Creating UserDetailsService & Entities</li>
+                  <li>• Encrypting passwords with BCrypt</li>
+                  <li>• Protecting endpoints with @PreAuthorize</li>
+                </ul>
+              </div>
+
+              <div className="bg-indigo-50 border-l-4 border-indigo-500 p-6 mb-8 text-left">
+                <h3 className="font-bold text-indigo-800 mb-2">⏭️ Next Step: Jakarta API</h3>
+                <p className="text-indigo-700 text-sm mb-2">
+                  Take a deeper dive into the enterprise standards behind Spring.
+                </p>
+                <p className="text-indigo-600 text-sm">
+                  Learn about Servlets, Contexts, and the core of Java web development.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <a
+                  href="https://4-jakarta-api.netlify.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-lg px-8 py-4 rounded-lg transition-all transform hover:scale-105 shadow-lg"
+                >
+                  <Server className="w-5 h-5 mr-2" />
+                  Continue to Jakarta API →
+                </a>
+
+                <a 
+                  href="https://2-spring-jpa.netlify.app/"
+                  className="text-gray-500 hover:text-red-600 hover:underline text-sm mt-2"
+                >
+                  ← Review Spring Data JPA
+                </a>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
