@@ -2,6 +2,9 @@
 /home/mghdaigu/Desktop/Spring-Boot/2_spring_JPA_EX/src/main/java/_blog/blog/repository/StudentRepository.java
 /home/mghdaigu/Desktop/Spring-Boot/2_spring_JPA_EX/src/main/java/_blog/blog/dto/UserDTO.java
 /home/mghdaigu/Desktop/Spring-Boot/2_spring_JPA_EX/src/main/java/_blog/blog/controller/StudentController.java
+/home/mghdaigu/Desktop/Spring-Boot/2_spring_JPA_EX/src/main/java/_blog/blog/controller/ProductController.java
 /home/mghdaigu/Desktop/Spring-Boot/2_spring_JPA_EX/src/main/java/_blog/blog/dto/Task.java
+/home/mghdaigu/Desktop/Spring-Boot/2_spring_JPA_EX/src/main/java/_blog/blog/entity/Product.java
+/home/mghdaigu/Desktop/Spring-Boot/2_spring_JPA_EX/src/main/java/_blog/blog/repository/ProductRepository.java
 /home/mghdaigu/Desktop/Spring-Boot/2_spring_JPA_EX/src/main/java/_blog/blog/dto/Product.java
 /home/mghdaigu/Desktop/Spring-Boot/2_spring_JPA_EX/src/main/java/_blog/blog/entity/Student.java
