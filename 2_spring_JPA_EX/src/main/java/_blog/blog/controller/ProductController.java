@@ -3,6 +3,8 @@ package _blog.blog.controller;
 import _blog.blog.entity.Product;
 import java.util.List;
 import _blog.blog.repository.*;
+import _blog.blog.repository.ProductRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +30,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public List<ResponseEntity> getProduct(@PathVariable Long id){
+    public ResponseEntity<Product> getProduct(@PathVariable Long id){
         return repository.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
@@ -44,6 +46,7 @@ public class ProductController {
             product.setPrice(details.getPrice());
             product.setCategory(details.getCategory());
             product.setStock(details.getStock());
+            return ResponseEntity.ok(repository.save(product));
         }).orElse(ResponseEntity.notFound().build());
     }
 
@@ -53,5 +56,6 @@ public class ProductController {
             repository.deleteById(id);
             return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.notFound().build();
     }
 }

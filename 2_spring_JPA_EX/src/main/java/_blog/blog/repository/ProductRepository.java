@@ -11,6 +11,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByCategory(String category);
     List<Product> findByPriceLessThan(Double price);
     // Add more custom queries!
-    List<Product> findById(Long id);
     List<Product> findByNameContainingIgnoreCase(String name);
 }

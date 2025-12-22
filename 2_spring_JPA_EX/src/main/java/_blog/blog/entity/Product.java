@@ -9,15 +9,15 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = flase)
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = flase)
+    @Column(nullable = false)
     private Double price;
 
     private String category;
     
-    @Column(nullable = flase)
+    @Column(nullable = false)
     private Integer stock;
 
     public Product(){}
